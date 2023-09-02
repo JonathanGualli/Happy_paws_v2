@@ -6,7 +6,6 @@ import 'package:happy_paws_v2/providers/global_variables_provider.dart';
 import 'package:happy_paws_v2/providers/pets_provider.dart';
 import 'package:happy_paws_v2/providers/user_provider.dart';
 import 'package:happy_paws_v2/screens/login_screen.dart';
-import 'package:happy_paws_v2/screens/profile_pet_screen.dart';
 import 'package:happy_paws_v2/screens/register_pet_screen.dart';
 import 'package:happy_paws_v2/screens/register_screen.dart';
 import 'package:happy_paws_v2/services/navigation_service.dart';

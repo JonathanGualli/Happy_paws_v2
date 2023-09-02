@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:happy_paws_v2/screens/pets_screen.dart';
+import 'package:happy_paws_v2/screens/profile_pet_screen.dart';
 import 'package:happy_paws_v2/screens/profile_screen.dart';
 import 'package:happy_paws_v2/screens/qr_screen.dart';
 

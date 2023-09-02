@@ -15,6 +15,7 @@ class PetData {
   late final String size;
   late final String type;
   late final String weight;
+  late final bool isUpdate;
 
   PetData(
       {required this.id,
@@ -30,7 +31,8 @@ class PetData {
       required this.sex,
       required this.size,
       required this.type,
-      required this.weight});
+      required this.weight,
+      required this.isUpdate});
 
   factory PetData.fromFirestore(DocumentSnapshot snapshot) {
     var data = snapshot.data() as Map<String, dynamic>;
@@ -49,6 +51,7 @@ class PetData {
       size: data["size"],
       type: data["type"],
       weight: data["weight"],
+      isUpdate: data["isUpdate"],
     );
   }
 
@@ -67,7 +70,8 @@ class PetData {
       "sex": sex,
       "size": size,
       "type": type,
-      "wight": weight,
+      "weight": weight,
+      "isUpdate": isUpdate,
     };
   }
 }

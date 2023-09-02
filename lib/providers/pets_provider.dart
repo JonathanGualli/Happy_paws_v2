@@ -35,6 +35,29 @@ class PetsProvider extends ChangeNotifier {
         size: "",
         type: type,
         weight: "",
+        isUpdate: false
+      ),
+    );
+  }
+
+  Future<void> updatePetInDB(PetData pet) {
+    return DBService.instance.updatePetInDB(
+      PetData(
+        id: pet.id,
+        images: pet.images,
+        aboutMe: pet.aboutMe,
+        birthDate: pet.birthDate,
+        age: pet.age,
+        characteristics: pet.characteristics,
+        profileImage: pet.profileImage,
+        name: pet.name,
+        nickname: pet.nickname,
+        race: pet.race,
+        sex: pet.sex,
+        size: pet.size,
+        type: pet.type,
+        weight: pet.weight,
+        isUpdate: pet.isUpdate
       ),
     );
   }

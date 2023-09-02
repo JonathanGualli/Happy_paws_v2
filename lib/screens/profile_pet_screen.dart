@@ -1,6 +1,8 @@
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:happy_paws_v2/providers/pets_provider.dart';
+import 'package:happy_paws_v2/screens/update_pet_screen.dart';
+import 'package:happy_paws_v2/widgets/sex_icon.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../models/pet_model.dart';
@@ -37,7 +39,7 @@ class _ProfilePetScreenState extends State<ProfilePetScreen> {
               ? Stack(
                   children: [
                     userImage(petData!.profileImage),
-                    icons(),
+                    icons(petData),
                     userInformation(petData),
                   ],
                 )
@@ -67,7 +69,7 @@ class _ProfilePetScreenState extends State<ProfilePetScreen> {
     );
   }
 
-  Widget icons() {
+  Widget icons(petData) {
     return Positioned(
       top: deviceHeight * 0.05,
       left: deviceWidth * 0.04,
@@ -83,25 +85,20 @@ class _ProfilePetScreenState extends State<ProfilePetScreen> {
           ),
           GestureDetector(
               child: const AppIcon(icon: Icons.edit),
-              onTap: () async {
-/*                 await NavigationService.instance
-                    .navigateToRoute(
+              onTap: () {
+                Navigator.push(
+                  context,
                   MaterialPageRoute(
-                    builder: (context) => UpdateProfile(userData: userData),
+                    builder: (context) => UpdatePetScreen(pet: petData.toMap()),
                   ),
-                )
-                    .then((value) {
-                  setState(() {
-                    build(context);
-                  });
-                }); */
+                );
               }),
         ],
       ),
     );
   }
 
-  Widget userInformation(pet) {
+  Widget userInformation(PetData pet) {
     return Positioned(
       left: 0,
       right: 0,
@@ -134,7 +131,7 @@ class _ProfilePetScreenState extends State<ProfilePetScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             nameInformation(pet),
-            addInformation()
+            pet.isUpdate ? otherInformation(pet) : addInformation(pet)
             //otherInformation(pet)
 
             //ownerInformation(),
@@ -151,13 +148,18 @@ class _ProfilePetScreenState extends State<ProfilePetScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          pet.name,
-          style: const TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF440A67),
-          ),
+        Row(
+          children: [
+            Text(
+              pet.name,
+              style: const TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF440A67),
+              ),
+            ),
+            pet.sex == "" ? const Text("") : SexIcon(sex: pet.sex)
+          ],
         ),
         Text(
           pet.nickname,
@@ -268,7 +270,7 @@ class _ProfilePetScreenState extends State<ProfilePetScreen> {
     );
   }
 
-  Widget addInformation() {
+  Widget addInformation(PetData petData) {
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -293,7 +295,15 @@ class _ProfilePetScreenState extends State<ProfilePetScreen> {
                     shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(32)))),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          UpdatePetScreen(pet: petData.toMap()),
+                    ),
+                  );
+                },
                 child: const Text(
                   'Añadir Información',
                   style: TextStyle(color: Colors.white, fontSize: 20),

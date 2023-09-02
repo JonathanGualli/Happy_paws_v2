@@ -63,9 +63,9 @@ class _PetsScreenState extends State<PetsScreen> {
                           direction: DismissDirection.endToStart,
                           onDismissed: (direction) {
                             PetsProvider.instance.deletePet(petsData[index].id);
-                            setState(() {
-                              petsData.removeAt(index);
-                            });
+                            // setState(() {
+                            //   petsData.removeAt(index);
+                            // });
                           },
                           confirmDismiss: (direction) async {
                             bool? result = false;

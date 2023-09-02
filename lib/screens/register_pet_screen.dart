@@ -121,7 +121,7 @@ class _RegisterPetScreenState extends State<RegisterPetScreen> {
           child: SizedBox(
             width: deviceWidth * 0.7,
             child: DropdownButtonFormField(
-              decoration: InputDecoration.collapsed(
+              decoration: const InputDecoration.collapsed(
                   hintText: "Selecciona un tipo de mascota",
                   fillColor: Colors.red),
               items: const [

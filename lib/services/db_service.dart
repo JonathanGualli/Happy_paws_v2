@@ -105,7 +105,37 @@ class DBService {
         'sex': pet.sex,
         'size': pet.size,
         'type': pet.type,
-        'weight': pet.weight
+        'weight': pet.weight,
+        'isUpdate': pet.isUpdate
+      });
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
+  }
+
+  Future<void> updatePetInDB(PetData pet) async {
+    try {
+      await _db
+          .collection(_userCollection)
+          .doc(AuthProvider.instance.user!.uid)
+          .collection(_petsCollection)
+          .doc(pet.id)
+          .update({
+        'images': pet.images,
+        'aboutMe': pet.aboutMe,
+        "birthDate": pet.birthDate,
+        "age": pet.age,
+        "characteristics": pet.characteristics,
+        "profileImage": pet.profileImage,
+        "name": pet.name,
+        "nickname": pet.nickname,
+        "race": pet.race,
+        "sex": pet.sex,
+        "size": pet.size,
+        "type": pet.type,
+        "weight": pet.weight,
+        "isUpdate": pet.isUpdate
       });
     } catch (e) {
       // ignore: avoid_print
