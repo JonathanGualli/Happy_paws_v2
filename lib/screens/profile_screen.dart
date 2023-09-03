@@ -40,7 +40,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     userImage(userData!.image),
                     icons(context, userData),
                     userInformation(
-                        userData.name, userData.email, userData.phone),
+                        userData.name, userData.email, userData.phone, userData.address, userData.aboutMe)
                     //Text(snapshot.data!.name),
                   ],
                 )
@@ -60,7 +60,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: Container(
         width: double.maxFinite,
         //height: 350,
-        height: deviceHeight * 0.49,
+        height: deviceHeight * 0.44,
         decoration: BoxDecoration(
             image: DecorationImage(
           fit: BoxFit.cover,
@@ -96,20 +96,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget userInformation(String name, String email, String phone) {
+  Widget userInformation(String name, String email, String phone, String address, String aboutMe) {
     return Positioned(
       left: 0,
       right: 0,
       bottom: 0,
-      top: deviceHeight * 0.44,
+      top: deviceHeight * 0.42,
       child: Container(
         height: double.minPositive,
         padding: EdgeInsets.fromLTRB(deviceWidth * 0.08, deviceWidth * 0.1,
             deviceWidth * 0.08, deviceWidth * 0.08),
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
-            topRight: Radius.circular(47),
-            topLeft: Radius.circular(47),
+            topRight: Radius.circular(55),
+            topLeft: Radius.circular(55),
           ),
           color: Color(0xFFDADAFF),
         ),
@@ -120,6 +120,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             nameInformation(name),
             emailInformation(email),
             phoneInformation(phone),
+            addressInformation(address),
+            aboutMeInformation(aboutMe),
+            
             logOut(),
           ],
         ),
@@ -133,11 +136,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
       children: [
         Text(
           name,
-          style: const TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF440A67),
-          ),
+       //    style: const TextStyle(
+         //   fontSize: 20,
+           // fontWeight: FontWeight.bold,
+           // color: Color(0xFF440A67),
+         // ),
         ),
         const Text(
           "Dueño de 2 mascota/s",
@@ -146,81 +149,139 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget emailInformation(String email) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Padding(
-          padding: EdgeInsets.only(bottom: 10),
-          child: Text('Correo:',
-              style: TextStyle(
-                fontSize: 20,
-                color: Color.fromARGB(255, 74, 20, 141),
-              )),
+ Widget emailInformation(String email) {
+  return Row(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+      const Icon(
+        Icons.email,
+        color: Color(0xFFFF78C4),
+        size: 16.0, // Ajusta el tamaño del icono según tu preferencia
+      ),
+      const SizedBox(
+        width: 8.0, // Espacio entre el icono y el texto (ajusta según tu preferencia)
+      ),
+      const Text(
+        'Correo:',
+        //style: TextStyle(
+          //fontSize: 20,
+          //color: Color.fromARGB(255, 74, 20, 141),
+        //),
+      ),
+      const SizedBox(
+        width: 8.0, // Espacio entre 'Correo:' y la dirección de correo electrónico (ajusta según tu preferencia)
+      ),
+      Text(
+        email,
+        style: const TextStyle(
+          color: Color(0xFF440A67),
+          fontSize: 16,
         ),
-        Center(
-          child: SizedBox(
-            width: deviceWidth * 0.7,
-            child: TextFormField(
-              enabled: false,
-              readOnly: true,
-              controller: TextEditingController(text: email),
-              decoration: const InputDecoration(
-                disabledBorder: UnderlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Color.fromARGB(255, 74, 20, 141))),
-                prefixIcon: Icon(Icons.email),
-                prefixIconColor: Color(0xFFFF78C4),
-              ),
-              textAlignVertical: TextAlignVertical.bottom,
-              style: const TextStyle(
-                color: Color(0xFF440A67),
-                fontSize: 16,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+      ),
+    ],
+  );
+}
 
-  Widget phoneInformation(String phone) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Padding(
-          padding: EdgeInsets.only(bottom: 10),
-          child: Text('Teléfono:',
-              style: TextStyle(
-                fontSize: 20,
-                color: Color.fromARGB(255, 74, 20, 141),
-              )),
+Widget phoneInformation(String phone) {
+  return Row(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+      const Icon(
+        Icons.phone_android,
+        color: Color(0xFFFF78C4),
+        size: 16.0, // Ajusta el tamaño del icono según tu preferencia
+      ),
+      const SizedBox(
+        width: 8.0, // Espacio entre el icono y el texto (ajusta según tu preferencia)
+      ),
+      const Text(
+        'Teléfono:',
+        style: TextStyle(
+          color: Color(0xFF440A67),
+          fontSize: 16,
         ),
-        Center(
-          child: SizedBox(
-            width: deviceWidth * 0.7,
-            child: TextFormField(
-              enabled: false,
-              readOnly: true,
-              controller: TextEditingController(text: phone),
-              decoration: const InputDecoration(
-                disabledBorder: UnderlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Color.fromARGB(255, 74, 20, 141))),
-                prefixIcon: Icon(Icons.phone_android),
-                prefixIconColor: Color(0xFFFF78C4),
-              ),
-              textAlignVertical: TextAlignVertical.bottom,
-              style: const TextStyle(
-                color: Color(0xFF440A67),
-                fontSize: 16,
-              ),
+      ),
+      const SizedBox(
+        width: 8.0, // Espacio entre 'Teléfono:' y el número de teléfono (ajusta según tu preferencia)
+      ),
+      Text(
+        phone,
+        style: const TextStyle(
+          color: Color(0xFF440A67),
+          fontSize: 16,
+        ),
+      ),
+    ],
+  );
+}
+
+
+Widget addressInformation(String address) {
+  return Row(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+      const Icon(
+        Icons.location_on,
+        color: Color(0xFFFF78C4),
+        size: 16.0, // Ajusta el tamaño del icono según tu preferencia
+      ),
+      const SizedBox(
+        width: 8.0, // Espacio entre el icono y la dirección (ajusta según tu preferencia)
+      ),
+      const Text(
+        'Ubicación:',
+        style: TextStyle(
+          color: Color(0xFF440A67),
+          fontSize: 16,
+        ),
+      ),
+      const SizedBox(
+        width: 8.0, // Espacio entre 'Ubicación:' y la dirección (ajusta según tu preferencia)
+      ),
+      Text(
+        address,
+        style: const TextStyle(
+          color: Color(0xFF440A67),
+          fontSize: 16,
+        ),
+      ),
+    ],
+  );
+}
+Widget aboutMeInformation(String aboutMe) {
+  return Row(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      const Padding(
+        padding: EdgeInsets.only(bottom: 0, right: 8), // Espacio entre el icono y el texto
+        child: Icon(
+          Icons.person, // Puedes cambiar este icono por el que desees
+          color: Color(0xFFFF78C4), // Color del icono
+          size: 20, // Tamaño del icono
+        ),
+      ),
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'About Me:',
+            style: TextStyle(
+              fontSize: 16,
+              color: Color.fromARGB(255, 74, 20, 141),
             ),
           ),
-        ),
-      ],
-    );
-  }
+          Text(
+            aboutMe,
+            style: const TextStyle(
+              color: Color(0xFF440A67),
+              fontSize: 16,
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
+}
 
   Widget logOut() {
     return Center(
