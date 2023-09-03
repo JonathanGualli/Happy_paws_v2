@@ -382,6 +382,7 @@ class _RegisterPetScreenState extends State<RegisterPetScreen> {
                         "pets_images",
                       );
                       var imageURL = await result!.ref.getDownloadURL();
+                      
                       await PetsProvider.instance
                           .addPetInDB(
                               nameController.text,

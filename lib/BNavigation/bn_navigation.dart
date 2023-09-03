@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:happy_paws_v2/providers/global_variables_provider.dart';
+import 'package:happy_paws_v2/providers/pets_provider.dart';
+import 'package:happy_paws_v2/screens/home_screen.dart';
 import 'package:happy_paws_v2/screens/notifications_screen.dart';
 import 'package:happy_paws_v2/screens/pets_screen.dart';
 import 'package:happy_paws_v2/screens/profile_screen.dart';
 import 'package:happy_paws_v2/screens/qr_screen.dart';
+import 'package:provider/provider.dart';
 
 class BNavigation extends StatefulWidget {
   static const routeName = "/BNnavigaton";
@@ -14,19 +18,21 @@ class BNavigation extends StatefulWidget {
 }
 
 class _BNavigationState extends State<BNavigation> {
-  int index = 2;
+  late int index;
 
   List<Widget> pages = [
     const PetsScreen(),
-    //QRCode(),
     const QrScreen(),
-    const NotificationsScreen(),
+    const HomeScreen(),
     const NotificationsScreen(),
     const ProfileScreen(),
   ];
 
   @override
   Widget build(BuildContext context) {
+    //index = GlobalVariables.instance.index;
+    index = Provider.of<GlobalVariables>(context).index;
+    PetsProvider.instance;
     return Scaffold(
       body: pages[index],
       bottomNavigationBar: navigationBar(),
@@ -41,7 +47,7 @@ class _BNavigationState extends State<BNavigation> {
       unselectedItemColor: Colors.grey,
       onTap: (index) {
         setState(() {
-          this.index = index;
+          GlobalVariables.instance.index = index;
         });
       },
       type: BottomNavigationBarType.fixed,

@@ -7,6 +7,7 @@ class GlobalVariables extends ChangeNotifier {
 
   File? image;
   bool isChange = false;
+  int index = 2;
 
 // Para una imagen temporal
   void setTemporalImage(File? imageTemp) {
@@ -21,7 +22,11 @@ class GlobalVariables extends ChangeNotifier {
   void disposeTemporalImage() {
     image = null;
     isChange = false;
-    notifyListeners();
   }
 
+  //index del BNavigation.
+  void changeIndexBN(int n) {
+    index = n;
+    notifyListeners();
+  }
 }

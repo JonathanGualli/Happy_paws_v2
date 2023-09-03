@@ -1,6 +1,8 @@
+// !Poner los metodos en un try catch
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:happy_paws_v2/models/user_model.dart';
 import 'package:happy_paws_v2/providers/auth_provider.dart';
+import 'package:happy_paws_v2/providers/pets_provider.dart';
 
 import '../models/pet_model.dart';
 
@@ -77,13 +79,29 @@ class DBService {
     });
   }
 
-  Future<void> deletePet(String petID) async {
-    await _db
+  Future<PetData> getPetDataFromFirestore(String petID) async {
+    final docSnapshot = await _db
         .collection(_userCollection)
         .doc(AuthProvider.instance.user!.uid)
         .collection(_petsCollection)
         .doc(petID)
-        .delete();
+        .get();
+    final petData = PetData.fromFirestore(docSnapshot);
+    return petData;
+  }
+
+  Future<void> deletePet(String petID) async {
+    try {
+      await _db
+          .collection(_userCollection)
+          .doc(AuthProvider.instance.user!.uid)
+          .collection(_petsCollection)
+          .doc(petID)
+          .delete();
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
   }
 
   Future<void> createPetInDB(PetData pet) async {
@@ -106,7 +124,13 @@ class DBService {
         'size': pet.size,
         'type': pet.type,
         'weight': pet.weight,
-        'isUpdate': pet.isUpdate
+        'qrImage': pet.qrImage,
+        'isUpdate': pet.isUpdate,
+        'isSelected': pet.isSelected
+      }).then((doc) {
+        if (PetsProvider.instance.petSelected == null) {
+          PetsProvider.instance.selectPet(doc.id);
+        }
       });
     } catch (e) {
       // ignore: avoid_print
@@ -135,11 +159,53 @@ class DBService {
         "size": pet.size,
         "type": pet.type,
         "weight": pet.weight,
-        "isUpdate": pet.isUpdate
+        "qrImage": pet.qrImage,
+        "isUpdate": pet.isUpdate,
+        "isSelected": pet.isSelected,
       });
     } catch (e) {
       // ignore: avoid_print
       print(e);
     }
   }
+
+  Future<void> selectPetInDB(String petID, bool isSelected) async {
+    await _db
+        .collection(_userCollection)
+        .doc(AuthProvider.instance.user!.uid)
+        .collection(_petsCollection)
+        .doc(petID)
+        .update({"isSelected": isSelected});
+  }
+
+  Future<String?> getSelectedPet() async {
+    try {
+      QuerySnapshot querySnapshot = await _db
+          .collection(_userCollection)
+          .doc(AuthProvider.instance.user!.uid)
+          .collection(_petsCollection)
+          .where('isSelected', isEqualTo: true)
+          .limit(1)
+          .get();
+      if (querySnapshot.docs.isNotEmpty) {
+        return querySnapshot.docs[0].id;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+      return null;
+    }
+  }
+
+  Future<void> updateQR(String petID, qrURL) async {
+        await _db
+        .collection(_userCollection)
+        .doc(AuthProvider.instance.user!.uid)
+        .collection(_petsCollection)
+        .doc(petID)
+        .update({'qrImage': qrURL});
+  }
+
 }

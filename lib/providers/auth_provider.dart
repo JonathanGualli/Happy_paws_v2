@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:happy_paws_v2/BNavigation/bn_navigation.dart';
+import 'package:happy_paws_v2/providers/pets_provider.dart';
 import 'package:happy_paws_v2/screens/login_screen.dart';
+import 'package:happy_paws_v2/services/db_service.dart';
 import 'package:happy_paws_v2/services/navigation_service.dart';
 import 'package:happy_paws_v2/services/snackbar_service.dart';
 
@@ -52,8 +54,10 @@ class AuthProvider extends ChangeNotifier {
     try {
       await _auth
           .signInWithEmailAndPassword(email: email, password: password)
-          .then((result) {
+          .then((result) async {
         user = result.user;
+        PetsProvider.instance.petSelected =
+            await DBService.instance.getSelectedPet();
         status = AuthStatus.authenticated;
         notifyListeners();
         SnackBarService.instance
@@ -97,6 +101,7 @@ class AuthProvider extends ChangeNotifier {
     try {
       await _auth.signOut();
       user = null;
+      PetsProvider.instance.petSelected = null;
       status = AuthStatus.notAuthenticated;
       await NavigationService.instance
           .navigateToReplacementName(LoginScreen.routeName);

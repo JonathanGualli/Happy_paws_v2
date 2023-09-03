@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:happy_paws_v2/models/pet_model.dart';
@@ -647,7 +645,9 @@ class _UpdatePetScreenState extends State<UpdatePetScreen> {
                         size: sizeController.text,
                         type: widget.pet["type"],
                         weight: weightController.text,
-                        isUpdate: true),
+                        qrImage: widget.pet["qrImage"],
+                        isUpdate: true,
+                        isSelected: false),
                   )
                       .then((_) {
                     SnackBarService.instance

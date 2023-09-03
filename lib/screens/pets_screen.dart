@@ -4,12 +4,15 @@ import 'package:happy_paws_v2/providers/pets_provider.dart';
 import 'package:happy_paws_v2/screens/profile_pet_screen.dart';
 import 'package:happy_paws_v2/screens/register_pet_screen.dart';
 import 'package:happy_paws_v2/services/navigation_service.dart';
+import 'package:happy_paws_v2/widgets/no_pet.dart';
 import 'package:happy_paws_v2/widgets/sex_icon.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 
 class PetsScreen extends StatefulWidget {
   const PetsScreen({super.key});
+
+  static const routeName = '/petScreen';
 
   @override
   State<PetsScreen> createState() => _PetsScreenState();
@@ -52,9 +55,13 @@ class _PetsScreenState extends State<PetsScreen> {
 
           List<PetData>? petsData = snapshot.data;
 
+          if (snapshot.data!.isEmpty) {
+            PetsProvider.instance.petSelected = null;
+          }
+
           return snapshot.hasData
               ? snapshot.data!.isEmpty
-                  ? const Center(child: Text("pon data we"))
+                  ? const NoPetScreen()
                   : ListView.builder(
                       itemCount: petsData!.length,
                       itemBuilder: (context, index) {
@@ -118,6 +125,10 @@ class _PetsScreenState extends State<PetsScreen> {
                                 ),
                               );
                             },
+                            onLongPress: () {
+                              PetsProvider.instance
+                                  .selectPet(petsData[index].id);
+                            },
                             child: Container(
                               margin: EdgeInsets.only(
                                   left: deviceWidth * 0.06,
@@ -144,102 +155,102 @@ class _PetsScreenState extends State<PetsScreen> {
                                   Expanded(
                                     child: Container(
                                       height: deviceHeight * 0.14,
-                                      decoration: const BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.only(
+                                      decoration: BoxDecoration(
+                                        color: petsData[index].isSelected
+                                            ? const Color(0xFFD9ACF5)
+                                            : Colors.white,
+                                        borderRadius: const BorderRadius.only(
                                           topRight: Radius.circular(16.0),
                                           bottomRight: Radius.circular(16.0),
                                         ),
                                       ),
                                       child: Padding(
-                                          padding: EdgeInsets.all(
-                                              deviceWidth * 0.05),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                    petsData[index].name,
-                                                    style: const TextStyle(
-                                                      color: Color(0xFF440A67),
-                                                      fontSize: 20,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
+                                        padding:
+                                            EdgeInsets.all(deviceWidth * 0.05),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  petsData[index].name,
+                                                  style: const TextStyle(
+                                                    color: Color(0xFF440A67),
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.bold,
                                                   ),
-                                                  petsData[index].sex == ""
-                                                      ? const Text("")
-                                                      : SexIcon(
-                                                          sex: petsData[index]
-                                                              .sex)
+                                                ),
+                                                petsData[index].sex == ""
+                                                    ? const Text("")
+                                                    : SexIcon(
+                                                        sex:
+                                                            petsData[index].sex)
+                                              ],
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 9),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      const Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                right: 5),
+                                                        child: Icon(
+                                                          Icons.circle,
+                                                          size: 15,
+                                                          color:
+                                                              Color(0xFFB9F3E4),
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                          petsData[index].type),
+                                                    ],
+                                                  ),
+                                                  petsData[index].race != ""
+                                                      ? Row(
+                                                          children: [
+                                                            const Padding(
+                                                              padding: EdgeInsets
+                                                                  .only(
+                                                                      right: 5),
+                                                              child: Icon(
+                                                                Icons.circle,
+                                                                size: 15,
+                                                                color: Color(
+                                                                    0xFFFFD4B2),
+                                                              ),
+                                                            ),
+                                                            Text(petsData[index]
+                                                                .race)
+                                                          ],
+                                                        )
+                                                      : const Text(""),
                                                 ],
                                               ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 9),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Row(
-                                                      children: [
-                                                        const Padding(
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                                  right: 5),
-                                                          child: Icon(
-                                                            Icons.circle,
-                                                            size: 15,
-                                                            color: Color(
-                                                                0xFFB9F3E4),
-                                                          ),
-                                                        ),
-                                                        Text(petsData[index]
-                                                            .type),
-                                                      ],
+                                            ),
+                                            petsData[index].aboutMe != ""
+                                                ? Expanded(
+                                                    child: Text(
+                                                      petsData[index].aboutMe,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      //maxLines: 1,
                                                     ),
-                                                    petsData[index].race != ""
-                                                        ? Row(
-                                                            children: [
-                                                              const Padding(
-                                                                padding: EdgeInsets
-                                                                    .only(
-                                                                        right:
-                                                                            5),
-                                                                child: Icon(
-                                                                  Icons.circle,
-                                                                  size: 15,
-                                                                  color: Color(
-                                                                      0xFFFFD4B2),
-                                                                ),
-                                                              ),
-                                                              Text(petsData[
-                                                                      index]
-                                                                  .race)
-                                                            ],
-                                                          )
-                                                        : const Text(""),
-                                                  ],
-                                                ),
-                                              ),
-                                              petsData[index].aboutMe != ""
-                                                  ? Expanded(
-                                                      child: Text(
-                                                        petsData[index].aboutMe,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        //maxLines: 1,
-                                                      ),
-                                                    )
-                                                  : const Expanded(
-                                                      child: Text(""))
-                                              /* Expanded(
+                                                  )
+                                                : const Expanded(
+                                                    child: Text(""),
+                                                  ),
+                                            /* Expanded(
                                           child: Marquee(
                                             text: "agrega más información",
                                             blankSpace: 25.0,
@@ -251,8 +262,9 @@ class _PetsScreenState extends State<PetsScreen> {
                                                 const Duration(seconds: 2),
                                           ),
                                         ) */
-                                            ],
-                                          )),
+                                          ],
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ],

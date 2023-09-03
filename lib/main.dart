@@ -4,8 +4,8 @@ import 'package:happy_paws_v2/BNavigation/bn_navigation.dart';
 import 'package:happy_paws_v2/providers/auth_provider.dart';
 import 'package:happy_paws_v2/providers/global_variables_provider.dart';
 import 'package:happy_paws_v2/providers/pets_provider.dart';
-import 'package:happy_paws_v2/providers/user_provider.dart';
 import 'package:happy_paws_v2/screens/login_screen.dart';
+import 'package:happy_paws_v2/screens/pets_screen.dart';
 import 'package:happy_paws_v2/screens/register_pet_screen.dart';
 import 'package:happy_paws_v2/screens/register_screen.dart';
 import 'package:happy_paws_v2/services/navigation_service.dart';
@@ -32,8 +32,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<AuthProvider>(
           create: (context) => AuthProvider.instance,
         ),
-        ChangeNotifierProvider<UserProvider>(
-            create: (context) => UserProvider()),
         ChangeNotifierProvider<GlobalVariables>(
             create: (context) => GlobalVariables.instance),
         ChangeNotifierProvider<PetsProvider>(
@@ -53,6 +51,7 @@ class MyApp extends StatelessWidget {
           RegisterScreen.routeName: (context) => const RegisterScreen(),
           BNavigation.routeName: (context) => const BNavigation(),
           RegisterPetScreen.routeName: (context) => const RegisterPetScreen(),
+          PetsScreen.routeName: (context) => const PetsScreen(),
           //ProfilePetScreen.routeName: (context) => const ProfilePetScreen(),
         },
       ),
