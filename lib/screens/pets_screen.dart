@@ -4,6 +4,7 @@ import 'package:happy_paws_v2/providers/pets_provider.dart';
 import 'package:happy_paws_v2/screens/profile_pet_screen.dart';
 import 'package:happy_paws_v2/screens/register_pet_screen.dart';
 import 'package:happy_paws_v2/services/navigation_service.dart';
+import 'package:happy_paws_v2/widgets/no_pet.dart';
 import 'package:happy_paws_v2/widgets/sex_icon.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
@@ -40,49 +41,7 @@ class _PetsScreenState extends State<PetsScreen> {
       ),
       body: Column(
         children: [
-Container(
-  color: Color(0xFFDADAFF), // Color de fondo morado
-  padding: EdgeInsets.only(top: 40, left: 16, right: 16, bottom: 40), // Ajusta el espacio alrededor del texto
-  child: Column(
-  mainAxisAlignment: MainAxisAlignment.start,
-  crossAxisAlignment: CrossAxisAlignment.center,
-  children: [
-    Text(
-      "!Hola!", // Primera línea
-      style: TextStyle(
-        color: Colors.purple, // Color del texto blanco
-        fontSize: 20,
-        fontWeight: FontWeight.bold,
-      ),
-    ),
-    Text(
-      "Agrega a tus ", // Segunda línea
-      style: TextStyle(
-        color: Colors.purple, // Color del texto blanco
-        fontSize: 20,
-        fontWeight: FontWeight.bold,
-      ),
-    ),
-    Text(
-      "Amiguitos Peludos", // Tercera línea
-      style: TextStyle(
-        color: Colors.purple, // Color del texto blanco
-        fontSize: 20,
-        fontWeight: FontWeight.bold,
-      ),
-    ),
-    ClipOval(
-      child: Image.network(
-        'https://media.istockphoto.com/id/1131169572/es/foto/retrato-de-un-perro-jack-russell-terrier-y-gato-escoc%C3%A9s-recta-abraz%C3%A1ndose-entre-s%C3%AD-aislado.jpg?s=612x612&w=0&k=20&c=gCDwRFV6REr0m7ivQ6OEvLeU22FcEufA6hLjvVK3xMY=',
-        width: 250, // Ancho de la imagen
-        height: 250, // Altura de la imagen
-        fit: BoxFit.cover, // Ajustar la imagen dentro del óvalo
-      ),
-    ),
-  ],
-),
 
-),
 
           Expanded(
             child: StreamBuilder<List<PetData>>(
@@ -104,7 +63,7 @@ Container(
 
                 return snapshot.hasData
                     ? snapshot.data!.isEmpty
-                        ? const Center(child: Text(""))
+                        ? const noPetScreen()
                         : ListView.builder(
                             itemCount: petsData!.length,
                             itemBuilder: (context, index) {
