@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:happy_paws_v2/models/user_model.dart';
 import 'package:happy_paws_v2/providers/auth_provider.dart';
+import 'package:happy_paws_v2/providers/pets_provider.dart';
 import 'package:happy_paws_v2/screens/update_screen.dart';
 import 'package:happy_paws_v2/services/db_service.dart';
 import 'package:happy_paws_v2/widgets/app_icon.dart';
@@ -139,9 +140,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
             color: Color(0xFF440A67),
           ),
         ),
-        const Text(
-          "Dueño de 2 mascota/s",
-        )
+        FutureBuilder<String>(
+          future: PetsProvider.instance.numberOfPets(),
+          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: LoadingAnimationWidget.fourRotatingDots(
+                    color: Colors.white, size: 30),
+              );
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else {
+              return Text(snapshot.data!);
+            }
+          },
+        ),
       ],
     );
   }

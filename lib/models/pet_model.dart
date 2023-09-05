@@ -82,4 +82,17 @@ class PetData {
       "isSelected": isSelected
     };
   }
+
+  String generateNonEmptyAttributesString() {
+    final Map<String, dynamic> petAttributes = toMap();
+    final List<String> nonEmptyAttributes = [];
+
+    petAttributes.forEach((key, value) {
+      if (value != null && value.toString().toString() != "") {
+        nonEmptyAttributes.add('$key: $value');
+      }
+    });
+
+    return nonEmptyAttributes.join(', ');
+  }
 }

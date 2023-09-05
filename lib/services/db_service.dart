@@ -161,7 +161,6 @@ class DBService {
         "weight": pet.weight,
         "qrImage": pet.qrImage,
         "isUpdate": pet.isUpdate,
-        "isSelected": pet.isSelected,
       });
     } catch (e) {
       // ignore: avoid_print
@@ -199,13 +198,12 @@ class DBService {
     }
   }
 
-  Future<void> updateQR(String petID, qrURL) async {
-        await _db
+  Future<void> updateQR(String petID, String qrURL) async {
+    await _db
         .collection(_userCollection)
         .doc(AuthProvider.instance.user!.uid)
         .collection(_petsCollection)
         .doc(petID)
         .update({'qrImage': qrURL});
   }
-
 }

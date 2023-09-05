@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:happy_paws_v2/models/pet_model.dart';
+import 'package:happy_paws_v2/providers/auth_provider.dart';
 import 'package:happy_paws_v2/services/db_service.dart';
 
 class PetsProvider extends ChangeNotifier {
@@ -78,5 +79,20 @@ class PetsProvider extends ChangeNotifier {
     petSelected = petID;
     notifyListeners();
     return DBService.instance.selectPetInDB(petSelected!, true);
+  }
+
+  Future<String> numberOfPets() async {
+    QuerySnapshot snapshot = await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(AuthProvider.instance.user!.uid)
+        .collection("Pets")
+        .get();
+    String dato;
+    if (snapshot.docs.isEmpty) {
+      dato = "😞 Parece que no tienes mascotas 😢";
+    } else {
+      dato = "Dueño de ${snapshot.docs.length} mascota/s";
+    }
+    return dato;
   }
 }

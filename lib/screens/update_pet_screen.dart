@@ -647,7 +647,7 @@ class _UpdatePetScreenState extends State<UpdatePetScreen> {
                         weight: weightController.text,
                         qrImage: widget.pet["qrImage"],
                         isUpdate: true,
-                        isSelected: false),
+                        isSelected: widget.pet["isSelected"]),
                   )
                       .then((_) {
                     SnackBarService.instance
