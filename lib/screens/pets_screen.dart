@@ -175,12 +175,17 @@ class _PetsScreenState extends State<PetsScreen> {
                                           children: [
                                             Row(
                                               children: [
-                                                Text(
-                                                  petsData[index].name,
-                                                  style: const TextStyle(
-                                                    color: Color(0xFF440A67),
-                                                    fontSize: 20,
-                                                    fontWeight: FontWeight.bold,
+                                                Expanded(
+                                                  child: Text(
+                                                    petsData[index].name,
+                                                    style: const TextStyle(
+                                                      color: Color(0xFF440A67),
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
                                                   ),
                                                 ),
                                                 petsData[index].sex == ""

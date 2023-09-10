@@ -93,6 +93,19 @@ flutter:
     - assets/sadPets.png
     - assets/friendlyPets.jpg
     - assets/sadPets2.png
+    - assets/cat1.png
+    - assets/cat2.gif
+    - assets/cat3.gif
+    - assets/cuartoFondo.jpg
+    - assets/catPlay.gif
+    - assets/catPlay2.gif
+    - assets/catLove.gif
+    - assets/catSleep.gif
+    - assets/dog3.png
+    - assets/dog2.gif
+    - assets/dogPlay.gif
+    - assets/dogSleep.gif
+    
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

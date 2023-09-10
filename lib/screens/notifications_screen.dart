@@ -6,7 +6,7 @@ class NotificationsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text("Pagina de qr"),
+      child: Text("Pagina de notificaciones"),
     );
   }
 }

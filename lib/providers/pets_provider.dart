@@ -8,8 +8,11 @@ class PetsProvider extends ChangeNotifier {
   String? petSelected;
 
   PetsProvider() {
-    DBService.instance.getSelectedPet().then((data) => petSelected = data);
-    notifyListeners();
+    DBService.instance
+        .getSelectedPet()
+        .then((data) => petSelected = data)
+        .then((_) => notifyListeners());
+    //notifyListeners();
   }
 
   static PetsProvider instance = PetsProvider();
