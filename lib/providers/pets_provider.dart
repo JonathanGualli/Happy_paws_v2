@@ -6,6 +6,10 @@ import 'package:happy_paws_v2/services/db_service.dart';
 
 class PetsProvider extends ChangeNotifier {
   String? petSelected;
+  List<String> petNames = [];
+
+  static PetsProvider instance = PetsProvider();
+  Stream<List<PetData>> get petsStream => DBService.instance.petsDataStream;
 
   PetsProvider() {
     DBService.instance
@@ -15,8 +19,17 @@ class PetsProvider extends ChangeNotifier {
     //notifyListeners();
   }
 
-  static PetsProvider instance = PetsProvider();
-  Stream<List<PetData>> get petsStream => DBService.instance.petsDataStream;
+  void listenToPetsData(Stream<List<PetData>> petsDataStream) {
+    petsDataStream.listen((petsData) {
+      // Procesa los datos y obtén los nombres de las mascotas
+      final newPetNames = petsData.map((petData) => petData.name).toList();
+
+      // Actualiza la lista de nombres en el provider
+      petNames = newPetNames;
+
+      notifyListeners(); // Notificar a los oyentes (como widgets) sobre el cambio en los datos
+    });
+  }
 
   Stream<PetData> petStream(String petID) {
     return DBService.instance.petDataStrem(petID);

@@ -83,16 +83,16 @@ class PetData {
     };
   }
 
-  String generateNonEmptyAttributesString() {
-    final Map<String, dynamic> petAttributes = toMap();
-    final List<String> nonEmptyAttributes = [];
+  // String generateNonEmptyAttributesString() {
+  //   final Map<String, dynamic> petAttributes = toMap();
+  //   final List<String> nonEmptyAttributes = [];
 
-    petAttributes.forEach((key, value) {
-      if (value != null && value.toString().toString() != "") {
-        nonEmptyAttributes.add('$key: $value');
-      }
-    });
+  //   petAttributes.forEach((key, value) {
+  //     if (value != null && value.toString().toString() != "") {
+  //       nonEmptyAttributes.add('$key: $value');
+  //     }
+  //   });
 
-    return nonEmptyAttributes.join(', ');
-  }
+  //   return nonEmptyAttributes.join(', ');
+  // }
 }

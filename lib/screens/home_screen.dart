@@ -159,7 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       scale: 0.1,
                                     )
                                   : Image.asset(
-                                      'assets/dog3.png',
+                                      'assets/dog3.gif',
                                       width: deviceWidth,
                                     )
                           : isCat

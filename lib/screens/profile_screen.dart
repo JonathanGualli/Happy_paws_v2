@@ -33,6 +33,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: StreamBuilder<UserData>(
         stream: DBService.instance.getUserData(_auth!.user!.uid),
         builder: (BuildContext context, snapshot) {
+          
           var userData = snapshot.data;
 
           return snapshot.hasData

@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:happy_paws_v2/providers/global_variables_provider.dart';
 import 'package:happy_paws_v2/providers/pets_provider.dart';
 import 'package:happy_paws_v2/screens/home_screen.dart';
-import 'package:happy_paws_v2/screens/notifications_screen.dart';
 import 'package:happy_paws_v2/screens/pets_screen.dart';
 import 'package:happy_paws_v2/screens/profile_screen.dart';
 import 'package:happy_paws_v2/screens/qr_screen.dart';
+import 'package:happy_paws_v2/screens/reminders_screen.dart';
+import 'package:happy_paws_v2/widgets/no_reminders.dart';
 import 'package:provider/provider.dart';
 
 class BNavigation extends StatefulWidget {
@@ -24,7 +25,8 @@ class _BNavigationState extends State<BNavigation> {
     const PetsScreen(),
     const QrScreen(),
     const HomeScreen(),
-    const NotificationsScreen(),
+    //const NotificationsScreen(),
+    RemindersScreen(),
     const ProfileScreen(),
   ];
 

@@ -1,5 +1,6 @@
 // !Poner los metodos en un try catch
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:happy_paws_v2/models/reminder_model.dart';
 import 'package:happy_paws_v2/models/user_model.dart';
 import 'package:happy_paws_v2/providers/auth_provider.dart';
 import 'package:happy_paws_v2/providers/pets_provider.dart';
@@ -13,6 +14,7 @@ class DBService {
 
   final String _userCollection = "Users";
   final String _petsCollection = "Pets";
+  final String _reminderCollection = "Reminders";
 
   Future<void> createdUserInDB(String uid, String name, String email,
       String phone, String imageURL) async {
@@ -205,5 +207,66 @@ class DBService {
         .collection(_petsCollection)
         .doc(petID)
         .update({'qrImage': qrURL});
+  }
+
+  //Todito lo relacionado a las alarmas
+  Future<void> createReminderInDB(ReminderData reminder) async {
+    try {
+      await _db
+          .collection(_userCollection)
+          .doc(AuthProvider.instance.user!.uid)
+          .collection(_reminderCollection)
+          .doc(reminder.id)
+          .set({
+        'petName': reminder.petName,
+        'description': reminder.description,
+        'dateTime': reminder.dateTime,
+        'isEnabled': reminder.isEnabled
+      });
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
+  }
+
+  Stream<List<ReminderData>> get getRemindersStream {
+    return _db
+        .collection(_userCollection)
+        .doc(AuthProvider.instance.user!.uid)
+        .collection(_reminderCollection)
+        .snapshots()
+        .map((querySnapshot) {
+      return querySnapshot.docs.map((doc) {
+        return ReminderData.fromFirestore(doc);
+      }).toList();
+    });
+  }
+
+  Future<void> deleteReminder(String reminderID) async {
+    try {
+      await _db
+          .collection(_userCollection)
+          .doc(AuthProvider.instance.user!.uid)
+          .collection(_reminderCollection)
+          .doc(reminderID)
+          .delete();
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
+  }
+
+  Future<void> disableReminder(String reminderID) async {
+    try {
+      await _db
+          .collection(_userCollection)
+          .doc(AuthProvider.instance.user!.uid)
+          .collection(_reminderCollection)
+          .doc(reminderID)
+          .update({"isEnabled": false});
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
   }
 }

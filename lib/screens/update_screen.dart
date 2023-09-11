@@ -375,6 +375,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       imageURL = await value!.ref.getDownloadURL();
                     });
                   }
+                  
                   await DBService.instance
                       .updateUserInDB(
                     UserData(
