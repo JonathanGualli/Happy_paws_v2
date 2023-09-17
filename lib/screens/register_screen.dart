@@ -95,7 +95,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             //imageSelectorWidget(),
-            const ImageCircle(imagePath: "assets/profileImage.png", isRegister: true,),
+            const ImageCircle(
+              imagePath: "assets/profileImage.png",
+              isRegister: true,
+            ),
             nameTextField(),
             emailTextField(),
             phoneTextField(),
@@ -282,6 +285,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             width: deviceWidth * 0.7,
             child: TextFormField(
               autocorrect: false,
+              obscureText: true,
               controller: passwordController,
               style: const TextStyle(color: Color(0xFF57419D)),
               validator: (input) {

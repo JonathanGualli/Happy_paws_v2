@@ -184,7 +184,7 @@ class _ProfilePetScreenState extends State<ProfilePetScreen> {
                   height: deviceWidth * 0.2,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: const Color(0xFFED2B2A),
+                    color: const Color(0xFF7091F5),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -216,6 +216,7 @@ class _ProfilePetScreenState extends State<ProfilePetScreen> {
                     children: [
                       Text(
                         pet.age == DateTime(1950) ? "N/A" : pet.age,
+                        //pet.age.toString(),
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -240,6 +241,36 @@ class _ProfilePetScreenState extends State<ProfilePetScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
+                        pet.race == "" ? "N/A" : pet.race,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const Text(
+                        "Raza",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  width: deviceWidth * 0.2,
+                  height: deviceWidth * 0.2,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: const Color(0xFF0E21A0),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
                         pet.weight == "" ? "N/A" : pet.weight,
                         style: const TextStyle(
                           fontSize: 20,
@@ -254,10 +285,36 @@ class _ProfilePetScreenState extends State<ProfilePetScreen> {
                     ],
                   ),
                 ),
+                Container(
+                  width: deviceWidth * 0.2,
+                  height: deviceWidth * 0.2,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: const Color(0xFF9D44C0),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        pet.size == "" ? "N/A" : pet.size,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const Text(
+                        "talla",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
             ExpandableText(
               pet.aboutMe,
+              style: const TextStyle(fontSize: 17, color: Colors.deepPurple),
               expandText: 'Vew Más',
               collapseText: 'Vew Menos',
               maxLines: 3, // Número de líneas antes de "Vew Más"

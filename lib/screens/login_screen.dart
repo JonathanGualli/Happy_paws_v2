@@ -222,6 +222,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: TextFormField(
           controller: passwordController,
           autocorrect: false,
+          obscureText: true,
           style: const TextStyle(color: Color(0xFF57419D)),
           validator: (input) {
             if (input!.isEmpty) {
